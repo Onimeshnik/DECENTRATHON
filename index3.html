@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на профессию</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Тогда давайте пройдем тест и выберем подходящую для вас профессию</h1>
+        
+        <!-- Контейнер для вопросов -->
+        <div id="quiz">
+            <div class="question">Здесь будут появляться вопросы</div>
+        </div>
+
+        <!-- Кнопки "Да" и "Нет" для ответов на вопросы -->
+        <!-- <button class="button2" onclick="handleAnswer(true)">Да</button> -->
+        
+        <!-- Кнопка для перехода к следующему вопросу -->
+        <button id="next" onclick="nextQuestion()" style="display:none;">Следующий вопрос</button>
+        
+        <!-- Блок для отображения результата -->
+            <div id="result">
+                <h2>Ваш результат:</h2>
+                <p id="profession-result"></p>
+            </div>
+            <div id="nextbutton" class="hidden">
+                <button class="button2" onclick="handleAnswer()">Далее</button>
+            </div>
+    </div>
+
+    <script src="testovik.js"></script>
+</body>
+</html>

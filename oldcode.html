@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram LMS</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--tg-theme-bg-color);
+        }
+
+
+        .container {
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .container-it {
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-bg-color);
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 100%;
+        }
+
+        .container-lib {
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-bg-color);
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 100%;
+        }
+
+        .container-shop {
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-bg-color);
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 100%;
+        }
+
+        .container-les1 {
+            background-color: white;
+            color: var(--tg-theme-bg-color);
+            padding: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 100%;
+        }
+                                                                                                        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+
+        p-lib {
+            text-align: center;
+            color: white;
+            padding: 10px 5px;
+            font-size: 14px;
+        }
+        .button {
+            padding: 5px 10px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button2 {
+            background-color: var(--tg-theme-button-color);
+            font-size: 18px;
+            width: 100%;
+            height: 40px;
+            display: block;
+            color: white;
+            margin: 5px 0px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #007bb5;
+        }
+        /* .button2:hover {
+            background-color: #003bb5;
+        } */
+        .hidden {
+            display: none;
+        }
+
+        .fixed-buttons {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: var(--tg-theme-bg-color);
+            background-color: var(--tg-theme-bg-color);
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .fixed-buttons button {
+            margin: 0 0px;
+            padding: 10px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--tg-theme-text-color);
+            background-color: transparent;
+            border-radius: 5px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .it-buttons {
+            background-color: var(--tg-theme-button-color);
+            font-size: 24px;
+            width: 100%;
+            height: 60px;
+            display: block;
+            color: white;
+            margin: 5px 0px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .containeritem{
+            display: flex; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+        }
+
+        .itemList{
+            background-color:var(--tg-theme-bg-color);
+            color:var(--tg-theme-text-color);
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 30%; /* Ширина каждого элемента */
+            margin-bottom: 20px; /* Отступ между элементами */
+            box-sizing: border-box;
+        }
+
+        #money {
+            display: flex;
+            align-items: center;
+        }
+        #money img {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container" class="container">
+        <div id="welcome-message" class="hidden">
+            <h1>Добро пожаловать в A2!</h1>
+            <p>Вы уже определились с профессией?</p>
+            <button class="button2" onclick="handleProfession(true)">😎Да</button>
+            <button class="button2" onclick="handleProfession(false)">😭Нет</button>
+        </div>
+        <div id='jobtest' class="hidden">
+            <h1>Тогда давайте пройдем тест и выберем подходящую для вас профессию</h1>
+            <div id="quiz">
+                <div class="question">Здесь будут появляться вопросы</div>
+            </div>
+            <button id="next" onclick="nextQuestion()" style="display:none;">Следующий вопрос</button>
+            <div id="result">
+                <h2>Ваш результат:</h2>
+                <p id="profession-result"></p>
+            </div>
+        </div>
+        <div id="tests" class="hidden">
+            <h1>Выбирите направление</h1>
+            <button class="button2" onclick="chooseWay(1)">👨🏻‍💻IT</button>
+            <button class="button2" onclick="chooseWay(2)">💵Финансы</button>
+        </div>
+        <div id="testovik" class="hidden">
+            <h1>Тогда давайте пройдем тест и выберем подходящую для вас профессию</h1>
+            <button class="button2" onclick="testAgreeCheck(true)">🥳Начать</button>
+            <button class="button2" onclick="testAgreeCheck(false)">😞Позже</button>
+        </div>
+    </div>
+
+    <div id="container-it" class="container-it">
+        <div id="it" class="it">
+            <button class="it-buttons" onclick="startLesson('it', 1)">Введение</button>
+            <button class="it-buttons" onclick="startLesson('it', 2)">Лекция 3</button>
+            <button class="it-buttons" onclick="startLesson('it', 3)">Лекция 2</button>
+            <button class="it-buttons" onclick="backToWays()">🔙Назад</button>
+        </div>
+        <div id="container-les1" class="container-les1">
+            <h1>Что нужно знать программисту в 2024 году</h1>
+            <p>Сегодня почти из каждого утюга слышно о том, что работать в IT — это круто! Конечно же без практики никуда
+                ведь это очень важная часть. Для занятий нужен системный график и дисциплина. Поэтому для начала определитесь что вы хотите делать и изучать. Мы же предлагаем вам такие направления как:
+            </p>
+            <div class="containeritem">
+                <div class="itemList">
+                    <h3>Frontend</h3>
+                </div>
+                <div class="itemList">
+                    <h3>Backend</h3>
+                </div>
+                <div class="itemList">
+                    <h3>GameDev</h3>
+                </div>
+            </div>
+            <p>Эти направления одни из самых интересных и нужных в 2024 году</p>
+            <button class="button2" onclick="nextLesStep()">Далее</button>
+        </div>
+        <div id="chooseTestWay" class="container">
+            <h1>Важность практических занятий думаю не стоит вам объяснять</h1>
+            <h4>Выберите в каком формате будете его проходить</h4>
+            <div>
+                <button class="button2" onclick="chooseTestWay(true)">Игровая</button>
+            </div>
+            <div>
+                 <button class="button2" onclick="chooseTestWay(false)">Обычная</button>
+            </div>
+        </div>
+    </div>
+
+    <div id = "container-lib" class="container-lib">
+        <p-lib>@noname5969</p-lib>
+        <hr>
+        <p-lib>@koreezstas</p-lib>
+        <hr>
+    </div>
+
+    <div id = "container-shop" class="container-shop">
+        <p-lib id="money">
+            <img src="/2.png" width="15" height="15" align="left" />
+            <span id="coinText"><span id="coinCount">0</span></span>
+        </p-lib>
+    </div>
+
+    <div id="fixed-buttons" class="fixed-buttons">
+        <button onclick="selectPage(1)">🏠Главная</button>
+        <button onclick="selectPage(2)">📚Библиотека</button>
+        <button onclick="selectPage(3)">🛒Магазин</button>
+    </div>
+
+    <script>
+        Telegram.WebApp.ready();
+
+        const isFirstRun = localStorage.getItem('isFirstRun') || true;
+        const selectedWay = localStorage.getItem('selectedWay') || 0;
+
+        let coins = 0;
+
+        function updateCoinDisplay() {
+            document.getElementById("coinCount").innerText = coins;
+        }
+
+        updateCoinDisplay();
+
+        document.getElementById('container-it').classList.add('hidden');
+        document.getElementById('container-lib').classList.add('hidden');
+        document.getElementById('container-shop').classList.add('hidden');
+        document.getElementById('container-les1').classList.add('hidden');
+        document.getElementById('chooseTestWay').classList.add('hidden');
+        document.getElementById('fixed-buttons').classList.add('hidden');
+        document.getElementById('it').classList.add('hidden');
+
+        function backToWays() {
+            document.getElementById('container-it').classList.add('hidden');
+            document.getElementById('container-lib').classList.add('hidden');
+            document.getElementById('container-shop').classList.add('hidden');
+            document.getElementById('container-les1').classList.add('hidden');
+            document.getElementById('chooseTestWay').classList.add('hidden');
+            document.getElementById('container').classList.remove('hidden');
+            document.getElementById('tests').classList.remove('hidden');
+        }
+
+        const questions = [
+            {
+                question: "Вам больше нравится работать с людьми или с данными?",
+                options: ["Люди", "Данные"],
+                weights: { "Люди": "социальные профессии", "Данные": "аналитические профессии" }
+            },
+            {
+                question: "Предпочитаете физическую работу или интеллектуальную?",
+                options: ["Физическая", "Интеллектуальная"],
+                weights: { "Физическая": "технические профессии", "Интеллектуальная": "инженерные профессии" }
+            },
+            {
+                question: "Вам нравится решать творческие задачи?",
+                options: ["Да", "Нет"],
+                weights: { "Да": "творческие профессии", "Нет": "технические профессии" }
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        function showQuestion() {
+            const quizDiv = document.getElementById("quiz");
+            quizDiv.innerHTML = ''; // Очистить предыдущий вопрос
+
+            const questionData = questions[currentQuestion];
+            const questionText = document.createElement("h3");
+            questionText.innerText = questionData.question;
+            quizDiv.appendChild(questionText);
+
+            questionData.options.forEach((option, index) => {
+                const button = document.createElement("button");
+                button.innerText = option;
+                button.className = "button2";
+                button.onclick = () => selectAnswer(option);
+                quizDiv.appendChild(button);
+            });
+        }
+
+        document.getElementById('result').classList.add('hidden');
+        // Функция для выбора ответа
+        function selectAnswer(selectedOption) {
+            const questionData = questions[currentQuestion];
+            answers.push(questionData.weights[selectedOption]);
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const resultDiv = document.getElementById("result");
+            const quizDiv = document.getElementById("quiz");
+            const nextButton = document.getElementById("next");
+
+            quizDiv.style.display = "none";
+            nextButton.style.display = "none";
+
+            const resultText = analyzeResults();
+            document.getElementById("profession-result").innerText = resultText;
+            resultDiv.style.display = "block";
+        }
+
+        // Анализ результатов
+        function analyzeResults() {
+            const counts = {};
+            answers.forEach(answer => {
+                counts[answer] = (counts[answer] || 0) + 1;
+            });
+            const result = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            
+            const recommendations = {
+                "социальные профессии": "Социальный работник, Учитель, Психолог",
+                "аналитические профессии": "Аналитик данных, Бухгалтер, Экономист",
+                "технические профессии": "Строитель, Механик, Инженер",
+                "творческие профессии": "Дизайнер, Художник, Фотограф"
+            };
+            
+            return recommendations[result] || "Профессия не найдена";
+        }
+
+        function nextQuestion() {
+            showQuestion();
+        } 
+
+        // localStorage.setItem('isFirstRun', 'true');
+
+        if (isFirstRun == 'true') {
+            document.getElementById('welcome-message').classList.remove('hidden');
+        } else {
+            if (selectedWay == 0) {
+                document.getElementById('tests').classList.remove('hidden');
+            } else if (selectedWay == 1) {
+                document.getElementById('container-it').classList.remove('hidden');
+                document.getElementById('it').classList.remove('hidden');
+            }
+        }
+
+        function handleProfession(decided) {
+            localStorage.setItem('isFirstRun', 'false');
+
+            if (decided) {
+                document.getElementById('welcome-message').classList.add('hidden');
+                document.getElementById('tests').classList.remove('hidden');
+            } else {
+                document.getElementById('welcome-message').classList.add('hidden');
+                document.getElementById('testovik').classList.remove('hidden');
+            }
+        }
+
+        function testAgreeCheck(answer) {
+            if (answer == true) {
+                showQuestion();
+                document.getElementById('testovik').classList.add('hidden');
+                document.getElementById('jobtest').classList.remove('hidden');
+            } else {
+                document.getElementById('testovik').classList.add('hidden');
+                document.getElementById('tests').classList.remove('hidden');
+            }
+        }
+
+        function nextLesStep() {
+            document.getElementById('container-les1').classList.add('hidden');
+            document.getElementById('chooseTestWay').classList.remove('hidden');
+        }
+
+        function chooseTestWay(selected) {
+            // document.getElementById('chooseTestWay').classList.add('hidden');
+            // document.getElementById('container-lib').classList.add('hidden');
+            // document.getElementById('container-shop').classList.add('hidden');
+            // document.getElementById('container-les1').classList.add('hidden');
+            // document.getElementById('chooseTestWay').classList.add('hidden');
+            // document.getElementById('container').classList.remove('hidden');
+            // document.getElementById('tests').classList.remove('hidden');
+        }
+
+        function chooseWay(wayID) {
+            if (wayID == 1) {
+                localStorage.setItem('selectedWay', 1)
+                document.getElementById('it').classList.remove('hidden');
+                document.getElementById('tests').classList.add('hidden');
+                document.getElementById('fixed-buttons').classList.remove('hidden');
+                document.getElementById('container').classList.add('hidden');
+                document.getElementById('container-it').classList.remove('hidden');
+            } else {
+                alert('Выбери что-нибудь другое.');
+            }
+            document.getElementById('lessons').classList.add('hidden');
+            document.getElementById('fixed-buttons').classList.remove('hidden');
+        }
+
+        function startLesson(way, lessonId) {
+            document.getElementById(way).classList.add('hidden');
+            document.getElementById('container-les1').classList.remove('hidden');
+        }
+
+        function selectPage(page) {
+            if (page == 1 ) {
+                document.getElementById('container-it').classList.remove('hidden');
+                document.getElementById('container-lib').classList.add('hidden');
+                document.getElementById('container-shop').classList.add('hidden');
+                document.getElementById('container-les1').classList.add('hidden');
+                document.getElementById('it').classList.remove('hidden');
+            } else if (page == 2) {
+                document.getElementById('container-it').classList.add('hidden');
+                document.getElementById('container-lib').classList.remove('hidden');
+                document.getElementById('container-shop').classList.add('hidden');
+                document.getElementById('container-les1').classList.add('hidden');
+            } else  if (page == 3) {
+                document.getElementById('container-it').classList.add('hidden');
+                document.getElementById('container-lib').classList.add('hidden');
+                document.getElementById('container-shop').classList.remove('hidden');
+                document.getElementById('container-les1').classList.add('hidden');
+                // window.location.href = 'https://noname5969.rf.gd/index2.html';
+            }
+        }
+    </script>
+</body>
+</html>
